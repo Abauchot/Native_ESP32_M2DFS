@@ -26,43 +26,7 @@ std::vector<String> passwords = {
     "lzkfjavt", "deshqjlv", "hfcrpmqj", "stgtdpmk", "nealxloj", "pqwygeet", "uuvqbkxw", "gyxuyioo", "rqkuzleq", "czuaaire", "pyxcaiqc",
     "exxysayd", "jajnriij", "nchoqudf", "uzexsnfm", "jajuagec", "rnutbptb", "ogvbnogl", "emwuzqan", "kcgzpxfo", "fhgjzrxe", "nrncgdsx",
     "cywwydif", "lyuzcaqv", "iwzzufyn", "qbfjmlfi", "tdnsshfc", "kssrcayx", "ifykxdys", "bazausxn", "wahbnioc", "jvnqahyb", "jngbwrke",
-    "nobrqqda", "qjoehftw", "kfiervay", "frfdnemp", "uogvaxoy", "mrxsoriz", "ripscnac", "lcybccwa", "grvwfjre", "vfpovxfb", "drxegbnw",
-    "uqgtcomf", "vffsurhg", "rkgppqld", "eihmjela", "wmjugifs", "wzphzrqp", "ruoqvvsz", "wkqyiobj", "qqsfalig", "jnqbfzit", "foypedma",
-    "ilitsfdb", "ydgyiufn", "kqksvrcb", "vlkefimy", "xekeszqb", "laqwcarr", "tczmmbmd", "xcpqbkle", "lsrzadtr", "kranxvtl", "wpnzmldn",
-    "vjzehoza", "degnhpod", "jdodpgih", "wawushuj", "pkiffncv", "gujtopcc", "jcfpuuhz", "bkgvwxqm", "egxpnhwe", "aigxcimr", "ktcjtsde",
-    "exwkxrce", "zgwimqaq", "xjoqqekr", "aadjarnf", "ijsdfwgp", "pynhcmql", "lpqitgat", "tnqxtyem", "vfdepkeo", "yqlsegfv", "mbowelxc",
-    "ugaduxtj", "rymrjtuc", "ytwybsjt", "cnzvqkuq", "kyrndbcr", "qaikjtff", "pjdgxcfc", "uhqesvtg", "moizoowx", "mklhyzrl", "xyffokve",
-    "iuyzohge", "czaxxdxi", "saplbnbf", "dowulvck", "tfemjvjk", "ymttuiad", "sxrdfnaa", "alfzxmva", "dgpavcqy", "hvnfmqui", "ybxyecfn",
-    "vovicbcs", "gcaugaji", "zbfnipmu", "radcqnmq", "wlaooask", "drrjbkbc", "cxrgwksp", "tlvydckx", "garuthzm", "nikhlzwo", "epntjhdr",
-    "srxruwie", "ypsbwgpi", "eotqvuco", "pvvilcen", "plrgilnr", "pcoddugn", "tdvjzuky", "wbwfxbbn", "ozkdiica", "pknslulj", "hsbywqcf",
-    "fbasjjzt", "gkjdboor", "konjbhou", "hwoineyg", "eoqmjdno", "bslvnkfg", "gbkkfjcw", "ewgtzwix", "cascwmws", "lyrkwzzf", "ogavhxqd",
-    "kulsyieh", "tfccxbfa", "cuxvfddt", "azkvujdj", "ksfvhsii", "wxdxwbvy", "nuuanlbr", "jtbwwmld", "ihfpxekr", "mnaezogi", "vuppqwvj",
-    "aqodlnnt", "dgqmspec", "peccelzo", "bmxmvdnk", "evfoxuut", "msbhavqg", "upbtline", "djloihdn", "gqnzmvnv", "kwatsoka", "jkwjbozo",
-    "trwajtyt", "jdgkawpa", "mwbaxfop", "mvnlluac", "nxmzbtau", "ymuyagbq", "kauwaawp", "nbyuqarg", "hxqxhdul", "fmtejpda", "pqjuytuj",
-    "ahoxacvy", "qlsewxaf", "rdxevtnq", "iakmdjnl", "xrmagiaz", "hnkfeclh", "czunysfs", "fudgrhfx", "xlkfvorn", "rmbzvczf", "tfizbxkr",
-    "ecaagcoc", "dtopbstn", "qsbixyif", "hvylbpxw", "dmtfeceh", "ipglledi", "wukxltvl", "macakpog", "nqerrybr", "uqarfzeg", "bxfcogys",
-    "akjxypym", "onlrjaee", "hzdzlwxu", "qoforywv", "eliclhao", "lubhscai", "nqihmmvq", "gncmlyql", "zqjhanzj", "lchwfmyz", "wcyhijrc",
-    "titkjzfl", "omzhbawx", "wjovimvl", "ygogrlxi", "poxquwbr", "ivwddsne", "giocvkmz", "mckqexaq", "sjihxtdo", "hqtammmu", "ccjtugqr",
-    "gkbhyxqc", "wswhmjxi", "eavbbnnd", "slulgloi", "foillccp", "hlcemxhx", "pkrdwvzy", "vilwqsnl", "yhilpqtw", "vsmwzxxi", "hpwsofok",
-    "rbdpjukh", "gignctwt", "ktvmbnuo", "oehjktzb", "oagkhllv", "jwemvifg", "kafnjvzl", "djqfkckt", "ydjjsoop", "jjmkbvuj", "zpdefbxp",
-    "fftycivb", "kbhdxnea", "rgkotlbq", "hogjwlxo", "okqdnzxg", "kzzuqrdp", "vqvjiwkr", "wmbalnvy", "lwaffsni", "pjbacohx", "wbodbadu",
-    "ejztinqe", "yhhnuisj", "vwpnrxjn", "vhwylhra", "sxtshznp", "qhvjxaom", "pfsnvhmf", "fvpwayeg", "hzdooswm", "tackidly", "svkbdjfz",
-    "ffntpqpk", "tqrccxyq", "volpqmic", "dfzhvwar", "zehfllui", "bsfhhddr", "nktmelwu", "cctduqoz", "gzgcuxcw", "dqhlgfhn", "dmapgbvv",
-    "ofskwsqe", "kgaxogdr", "spwpsbhf", "bopsadyf", "abpaaigj", "jgxstcil", "hsfdcfxv", "ymasoylx", "ahbtwatm", "dlijcblt", "sdhlarff",
-    "spjypnwo", "buljqpcj", "dotzuuyv", "pheevrpe", "mahurrzq", "wpqafeld", "venyuuyg", "tnqbubhu", "rltnkhtn", "cuklejud", "bvwsltfo",
-    "yviapbga", "vutjxfqz", "fnkjmkoh", "tglljmrx", "dvpdwwds", "izdrtolt", "rrxaprdw", "sztcxxex", "uddtvznv", "eckuuaao", "vmgsnunc",
-    "nxtmmzkn", "kgvyqmxq", "cnczmbef", "lurcwgkk", "nmlbygfm", "wfcningm", "jebhscka", "ytkuhsoc", "zufpxqmq", "nrpnnfqa", "vwiyrxpu",
-    "yjfudkex", "rmtskwpm", "eppkpjzs", "wkwkynkd", "qgbpfmzu", "vcybncik", "kdqqkksl", "ebxwfwdy", "pcnlnrlc", "wxemtreg", "pogmuheh",
-    "mdgzdjih", "xrvwzkkn", "liusnvca", "taquiwtb", "mdecmjge", "fussbiag", "ddfaqnyc", "xefnqfmv", "hawzmtzv", "rgscnzcu", "vjjmxctn",
-    "deegjkqm", "vreoilwx", "wruesesw", "mryacxfh", "wsffrihm", "tkohpnzm", "yggjipux", "qvwlpjiu", "xngfskii", "pikiitmm", "ahnomypa",
-    "bcsahndu", "iniovsqv", "qvayqwax", "zhjmzlte", "bpowqubr", "pwcxbnyz", "ihtsiwel", "oadocela", "pxrsyhru", "wkwlkikn", "hnxnuhfi",
-    "tbxrluzr", "fdutyhxd", "lcqyvunh", "kifruxmd", "agmimjwa", "bhtkxvtc", "piochrkv", "rxssmvsq", "yqddvdlf", "tvpsgghl", "osxnojfy",
-    "tgtcbjlq", "blqacehn", "vywukhpq", "zwvqndzv", "ebfrjjlj", "aknbkjvy", "snwvxoaw", "oilegcik", "qbgttlyx", "rmysakvw", "bdkvjyfk",
-    "rfrsukxo", "adtbmqxw", "erwjapot", "drwkfmxs", "kcsqdwcz", "ijkxtjql", "lycbrnvw", "cbjhkvrv", "zzqnrlkr", "xlaefzkk", "lzhsxveu",
-    "wgmdiezu", "bcknfyke", "mcwoaewz", "fpvimxem", "kqjouhrj", "lpusuvgq", "fstoijge", "ypoqbmut", "arsusbza", "ouektgkr", "lvlkzmzk",
-    "omgwssle", "bjxzqjbn", "hvmhtdfk", "mnwtyjcb", "bfrndlkt", "qktutswj", "lsrtvtdi", "rzwxwjic", "nmhmgrte", "gpcpaapp", "fgczzugh",
-    "aspkmvfs", "hzihhmsg", "kvukwynb", "ljxjjfec", "btajnnss", "hlhzuybi", "bttbeiyp", "iiesorra", "figvinjs", "gurxckig", "aawasxbe",
-    "smbxeoak", "ziofnxkc", "xowcptyv", "xzjldfat", "nlbypshy", "jptvbmiq",
+    "nobrqqda", "qjoehftw",
 
     // Ajoutez ici le reste des mots de passe fournis dans le fichier passwords.txt
 };
@@ -92,7 +56,7 @@ void setup()
   srand(esp_random());
 
   // Sélectionner un mot de passe au hasard
-  //password = passwords[rand() % passwords.size()];
+  password = passwords[rand() % passwords.size()];
 
   // Initialiser l'écran TFT
   tft.init();
