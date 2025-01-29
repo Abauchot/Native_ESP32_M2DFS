@@ -31,204 +31,194 @@ std::vector<String> passwords = {
     // Ajoutez ici le reste des mots de passe fournis dans le fichier passwords.txt
 };
 
-// Définir les informations du point d'accès
+// Définition du point d'accès
 const char *ssid = "wifi_m2dfs_antoine";
 String password = "";
 
-// Variables pour stocker le nombre de connexions et les adresses MAC des clients
+// Variables de connexion
 int totalConnections = 0;
 int totalConnectionsEver = 0;
 int totalAttempts = 0;
 int currentConnections = 0;
-String connectedMACs = "";
-std::map<String, int> macAttempts;   // Compter le nombre de tentatives par adresse MAC
-std::map<String, bool> macConnected; // Statut de connexion pour chaque adresse MAC
+std::vector<String> successfulConnections; // Liste des Wi-Fi connectés
 
-// Initialiser l'écran TFT
+// Initialisation de l'écran TFT
 TFT_eSPI tft = TFT_eSPI();
 bool onMainScreen = true;
-
 uint16_t x = 0 , y = 0; 
 
 void setup()
 {
-  Serial.begin(115200);
-  srand(esp_random());
+    Serial.begin(115200);
+    srand(esp_random());
 
-  // Sélectionner un mot de passe au hasard
-  password = passwords[rand() % passwords.size()];
+    // Sélection d'un mot de passe initial aléatoire
+    password = passwords[rand() % passwords.size()];
 
-  // Initialiser l'écran TFT
-  tft.init();
-  tft.setRotation(0);
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    // Initialisation du TFT
+    tft.init();
+    tft.setRotation(0);
+    tft.fillScreen(TFT_BLACK);
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
 
-  // Démarrer le point d'accès Wi-Fi avec le mot de passe aléatoire
-  WiFi.softAP(ssid, password.c_str());
-  Serial.println("Point d'accès WiFi démarré");
+    // Démarrage du Wi-Fi
+    WiFi.softAP(ssid, password.c_str());
+    Serial.println("Point d'accès WiFi démarré");
 
-  // Afficher l'écran principal
-  displayMainScreen();
+    displayMainScreen();
 }
 
 void displayMainScreen()
 {
-  tft.fillScreen(TFT_BLACK);
-  tft.drawString("WiFi démarré", 10, 10);
-
-  // Afficher l'adresse MAC de l'ESP32
-  String macAddress = WiFi.softAPmacAddress();
-  tft.drawString("MAC ESP: " + macAddress, 10, 40);
-
-  // Afficher le mot de passe choisi
-  tft.drawString("Password: " + password, 10, 60);
-
-  // Afficher le nombre initial de connexions
-  tft.drawString("Total connexions: " + String(totalConnections), 10, 90);
-  tft.drawString("Total connexions ever: " + String(totalConnectionsEver), 10, 120);
-  tft.drawString("Total tentatives: " + String(totalAttempts), 10, 150);
-  tft.drawString("Clients actuels: " + String(currentConnections), 10, 180);
+    tft.fillScreen(TFT_BLACK);
+    tft.drawString("WiFi démarré", 10, 10);
+    tft.drawString("MAC ESP: " + WiFi.softAPmacAddress(), 10, 40);
+    tft.drawString("Password: " + password, 10, 60);
+    tft.drawString("Total connexions: " + String(totalConnections), 10, 90);
+    tft.drawString("Total connexions ever: " + String(totalConnectionsEver), 10, 120);
+    tft.drawString("Total tentatives: " + String(totalAttempts), 10, 150);
+    tft.drawString("Clients actuels: " + String(currentConnections), 10, 180);
 }
 
 void scanAndAttemptConnection()
 {
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextColor(TFT_GREEN, TFT_BLACK);
-  tft.drawString("Scanning WiFi...", 10, 10);
+    tft.fillScreen(TFT_BLACK);
+    tft.setTextColor(TFT_GREEN, TFT_BLACK);
+    tft.drawString("Scanning WiFi...", 10, 10);
 
-  // Scanner les réseaux Wi-Fi
-  int n = WiFi.scanNetworks();
-  if (n == 0)
-  {
-    tft.setTextColor(TFT_RED, TFT_BLACK);
-    tft.drawString("No WiFi networks found!", 10, 40);
-    Serial.println("No WiFi networks found!");
-  }
-  else
-  {
+    int n = WiFi.scanNetworks();
+    if (n == 0)
+    {
+        tft.setTextColor(TFT_RED, TFT_BLACK);
+        tft.drawString("No WiFi networks found!", 10, 40);
+        Serial.println("No WiFi networks found!");
+        return;
+    }
+
     tft.setTextColor(TFT_WHITE, TFT_BLACK);
-    Serial.println("WiFi networks found:");
     std::vector<String> filteredSSIDs;
 
     for (int i = 0; i < n; i++)
     {
-      String ssid = WiFi.SSID(i);
-      if (ssid.startsWith("wifi_m2dfs_")) {
-        filteredSSIDs.push_back(ssid);
-      }
+        String ssid = WiFi.SSID(i);
+        if (ssid.startsWith("wifi_m2dfs_")) {
+            filteredSSIDs.push_back(ssid);
+        }
     }
 
     if (filteredSSIDs.empty()) {
-      tft.setTextColor(TFT_RED, TFT_BLACK);
-      tft.drawString("No matching WiFi networks!", 10, 40);
-      Serial.println("No matching WiFi networks!");
-      return;
+        tft.setTextColor(TFT_RED, TFT_BLACK);
+        tft.drawString("No matching WiFi networks!", 10, 40);
+        Serial.println("No matching WiFi networks!");
+        return;
     }
 
-    // Afficher les réseaux filtrés
+    // Afficher les réseaux détectés
     for (size_t i = 0; i < filteredSSIDs.size() && i < 10; i++)
     {
-      tft.drawString(String(i + 1) + ": " + filteredSSIDs[i], 10, 40 + (i * 20));
+        tft.drawString(String(i + 1) + ": " + filteredSSIDs[i], 10, 40 + (i * 20));
     }
 
-    // Essayer de se connecter à chaque réseau avec un mot de passe sélectionné aléatoirement
+    // Essayer chaque mot de passe sur 3 réseaux à la fois
     while (!passwords.empty()) {
-      String randomPassword = passwords[rand() % passwords.size()];
-      Serial.println("Trying password: " + randomPassword);
-      Serial.println("-------------------------------");
+        String randomPassword = passwords[rand() % passwords.size()];
+        totalAttempts++;
 
-      for (const String& ssid : filteredSSIDs) {
-        Serial.println("Trying to connect to: " + ssid);
-        Serial.println("-------------------------------");
-        if (WiFi.status() == WL_CONNECTED)
-        {
-          WiFi.disconnect();
-          delay(100);
+        Serial.println("Trying password: " + randomPassword);
+
+        for (size_t i = 0; i < filteredSSIDs.size(); i += 3) {
+            // Tester sur 3 Wi-Fi à la fois
+            for (size_t j = 0; j < 3 && (i + j) < filteredSSIDs.size(); j++) {
+                String ssid = filteredSSIDs[i + j];
+
+                Serial.println("Trying to connect to: " + ssid + " with password: " + randomPassword);
+
+                if (WiFi.status() == WL_CONNECTED) {
+                    WiFi.disconnect();
+                    delay(100);
+                }
+
+                WiFi.begin(ssid.c_str(), randomPassword.c_str());
+
+                int attempts = 5;
+                while (WiFi.status() != WL_CONNECTED && attempts > 0)
+                {
+                    delay(1000);
+                    attempts--;
+                }
+
+                if (WiFi.status() == WL_CONNECTED)
+                {
+                    Serial.println("Connected to: " + ssid + " with password: " + randomPassword);
+
+                    // Ajouter le SSID à la liste des connexions réussies
+                    if (std::find(successfulConnections.begin(), successfulConnections.end(), ssid) == successfulConnections.end()) {
+                        successfulConnections.push_back(ssid);
+                    }
+
+                    tft.fillScreen(TFT_BLACK);
+                    tft.setTextColor(TFT_GREEN, TFT_BLACK);
+                    tft.drawString("Connected to:", 10, 10);
+                    tft.drawString(ssid, 10, 40);
+                    tft.drawString("Password:", 10, 70);
+                    tft.drawString(randomPassword, 10, 100);
+                    
+                    delay(2000);
+                    WiFi.disconnect();
+                }
+            }
         }
 
-        WiFi.begin(ssid.c_str(), randomPassword.c_str());
-
-        // Attendre pour voir si la connexion réussit
-        int attempts = 5;
-        while (WiFi.status() != WL_CONNECTED && attempts > 0)
-        {
-          delay(1000);
-          attempts--;
-        }
-
-        if (WiFi.status() == WL_CONNECTED)
-        {
-          Serial.println("Connected to: " + ssid + " with password: " + randomPassword);
-          tft.fillScreen(TFT_BLACK);
-          tft.setTextColor(TFT_GREEN, TFT_BLACK);
-          tft.drawString("Connected to:", 10, 10);
-          tft.drawString(ssid, 10, 40);
-          tft.drawString("Password:", 10, 70);
-          tft.drawString(randomPassword, 10, 100);
-
-          // Déconnexion avant de passer au réseau suivant
-          WiFi.disconnect();
-          delay(1000);
-          return;
-        }
-        else
-        {
-          Serial.println("Failed to connect to: " + ssid);
-          Serial.println("-------------------------------");
-        }
-      }
-
-      // Retirer le mot de passe essayé pour éviter de le réutiliser
-      passwords.erase(std::remove(passwords.begin(), passwords.end(), randomPassword), passwords.end());
+        // Retirer ce mot de passe et essayer un autre
+        passwords.erase(std::remove(passwords.begin(), passwords.end(), randomPassword), passwords.end());
     }
-  }
 
-  // Nettoyer les réseaux Wi-Fi scannés pour la prochaine utilisation
-  WiFi.scanDelete();
+    WiFi.scanDelete();
+
+    // Affichage des connexions réussies
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+    tft.drawString("Successful connections:", 10, 220);
+
+    int yPos = 240;
+    for (size_t i = 0; i < successfulConnections.size() && i < 5; i++) {
+        tft.drawString(successfulConnections[i], 10, yPos);
+        yPos += 20;
+    }
 }
 
 void loop()
 {
-  // Gérer les changements d'écran
-  if (tft.getTouch(&x, &y)) // Vérifier si l'écran tactile est pressé
-  {
-    if (onMainScreen)
-    {
-      onMainScreen = false;
-      scanAndAttemptConnection();
-    }
-    else
-    {
-      onMainScreen = true;
-      displayMainScreen();
-    }
-    delay(300); // Éviter les appuis multiples rapides
-  }
+    static unsigned long lastUpdate = 0;
+    if (millis() - lastUpdate > 3000) {
+        lastUpdate = millis();
+        totalConnections = WiFi.softAPgetStationNum();
+        currentConnections = totalConnections;
+        if (totalConnections > totalConnectionsEver) {
+            totalConnectionsEver = totalConnections;
+        }
 
-  if (onMainScreen)
-  {
-    // Code pour la mise à jour de l'écran principal
-    int numClients = WiFi.softAPgetStationNum();
-    if (numClients != totalConnections)
-    {
-      totalConnections = numClients;
-      currentConnections = numClients;
-      if (numClients > totalConnectionsEver)
-      {
-        totalConnectionsEver = numClients;
-      }
-      connectedMACs = "";
-
-      // Mettre à jour les informations sur l'écran principal
-      tft.fillRect(10, 90, 220, 20, TFT_BLACK); // Effacer la zone avant de réécrire
-      tft.drawString("Total connexions: " + String(totalConnections), 10, 90);
-      tft.fillRect(10, 120, 220, 20, TFT_BLACK); // Effacer la zone avant de réécrire
-      tft.drawString("Total connexions ever: " + String(totalConnectionsEver), 10, 120);
-      tft.fillRect(10, 150, 220, 20, TFT_BLACK); // Effacer la zone avant de réécrire
-      tft.drawString("Total tentatives: " + String(totalAttempts), 10, 150);
-      tft.fillRect(10, 180, 220, 20, TFT_BLACK); // Effacer la zone avant de réécrire
-      tft.drawString("Clients actuels: " + String(currentConnections), 10, 180);
+        tft.fillRect(10, 90, 220, 20, TFT_BLACK);
+        tft.drawString("Total connexions: " + String(totalConnections), 10, 90);
+        tft.fillRect(10, 120, 220, 20, TFT_BLACK);
+        tft.drawString("Total connexions ever: " + String(totalConnectionsEver), 10, 120);
+        tft.fillRect(10, 150, 220, 20, TFT_BLACK);
+        tft.drawString("Total tentatives: " + String(totalAttempts), 10, 150);
+        tft.fillRect(10, 180, 220, 20, TFT_BLACK);
+        tft.drawString("Clients actuels: " + String(currentConnections), 10, 180);
     }
-  }
+
+    if (tft.getTouch(&x, &y))
+    {
+        if (onMainScreen)
+        {
+            onMainScreen = false;
+            scanAndAttemptConnection();
+        }
+        else
+        {
+            onMainScreen = true;
+            displayMainScreen();
+        }
+        delay(300);
+    }
 }
